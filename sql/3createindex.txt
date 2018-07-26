@@ -1,0 +1,5 @@
+--コメントテーブルのarticle_idにindexを張るSQL
+CREATE INDEX comments_article_id_index ON comments(article_id);
+
+--indexを削除するSQL
+--DROP INDEX comments_article_id_index;

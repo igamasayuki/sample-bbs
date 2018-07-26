@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>掲示板</title>
+<link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+	<h3>掲示板アプリケーション(テーブル結合版)</h3>
+	記事件数　　　：<span th:text="${listSize}">100</span>件<br>
+	データ取得時間：<span th:text="${lapTime}">1600</span>ミリ秒<br>
+	<form th:action="@{/joinedbbs/postarticle}" th:object="${joinedArticleForm}" method="post">
+		<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-messages">エラー！</div>
+		投稿者名：<input type="text" name="name" th:field="*{name}" th:errorclass="error-input" value="山田"><br>
+		<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-messages">エラー！</div>
+		投稿内容：<textarea name="content" th:field="*{content}" th:errorclass="error-input" rows="5" cols="25">投稿内容投稿内容投稿内容投稿内容投稿内容</textarea><br>
+		<input type="submit" value="記事投稿">
+	</form>
+	<hr>
+	<div th:each="article : ${articleList}">
+		投稿者名：<span th:text="${article.name}">記事太郎</span><br>
+		投稿内容：<pre><span th:text="${article.content}">記事投稿内容</span></pre>
+		<form th:action="@{/joinedbbs/deletearticle}" th:object="${joinedArticleForm}" method="post">
+			<input type="hidden" name="id" th:value="${article.id}">
+			<input type="submit" value="記事削除">
+		</form>
+		<br>
+		
+		<div th:each="comment : ${article.commentList}">
+			コメント者名：<span th:text="${comment.name}">コメント太郎</span><br>
+			コメント内容：<pre><span th:text="${comment.content}">コメント投稿内容</span></pre>
+		</div>
+		<form th:action="@{/joinedbbs/postcomment}" th:object="${joinedCommentForm}" method="post">
+			<input type="hidden" name="articleId" th:value="${article.id}">
+			<div th:if="${article.id == joinedCommentForm.articleId}">
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-messages">エラー！</div>
+			</div>
+			名前:<br>
+			<input type="text" name="name" th:field="*{name}" th:errorclass="error-input" value="コメント太郎"><br>
+			<div th:if="${article.id == joinedCommentForm.articleId}">
+				<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-messages">エラー！</div>
+			</div>
+			コメント:<br>
+			<textarea name="content" th:field="*{content}" th:errorclass="error-input" rows="5" cols="25">コメント投稿内容</textarea><br>
+			<input type="submit" value="コメント投稿" >
+		</form>
+		<hr>
+	</div>
+</body>
+</html>
