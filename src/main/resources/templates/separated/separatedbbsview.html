@@ -36,12 +36,16 @@
 				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-messages">エラー！</div>
 			</div>
 			名前:<br>
-			<input type="text" name="name" th:field="*{name}" th:errorclass="error-input" value="コメント太郎"><br>
+			<input type="text" name="name" th:if="${article.id == separatedCommentForm.articleId}" th:field="*{name}" th:errorclass="error-input" value="コメント太郎">
+			<input type="text" name="name" th:if="${article.id != separatedCommentForm.articleId}">
+			<br>
 			<div th:if="${article.id == separatedCommentForm.articleId}">
 				<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-messages">エラー！</div>
 			</div>
 			コメント:<br>
-			<textarea name="content" th:field="*{content}" th:errorclass="error-input" rows="5" cols="25">コメント投稿内容</textarea><br>
+			<textarea name="content" th:if="${article.id == separatedCommentForm.articleId}" th:field="*{content}" th:errorclass="error-input" rows="5" cols="25">コメント投稿内容</textarea>
+			<textarea name="content" th:if="${article.id != separatedCommentForm.articleId}" rows="5" cols="25"></textarea>
+			<br>
 			<input type="submit" value="コメント投稿" >
 		</form>
 		<hr>
