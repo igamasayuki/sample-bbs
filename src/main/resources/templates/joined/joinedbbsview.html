@@ -4,6 +4,30 @@
 <meta charset="UTF-8">
 <title>掲示板</title>
 <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	function like(articleId) {
+		//ajaxでコントローラにリクエストを送信
+		$.ajax({
+			type : "GET", 				//GET or POST
+			url : "/like", 				//送信先のコントローラURL
+			data : {
+				articleId : articleId
+			}, 							//リクエストパラメータをJSON形式で送る
+			dataType: "json",			// レスポンスをJSON形式で受け取る 
+			async : true,				//true:非同期(デフォルト), false:同期
+			success : function(data) {
+				//通信が成功した場合に受け取るメッセージ
+				likeCount = data["likeCount"];
+				$("#likeCount" + articleId).text(likeCount)
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("リクエスト時にエラーが発生しました：" + textStatus + ":\n" + errorThrown);
+			}
+		});
+
+	}
+</script>
 </head>
 <body>
 	<h3>掲示板アプリケーション(テーブル結合版)</h3>
@@ -23,6 +47,8 @@
 		<form th:action="@{/joinedbbs/deletearticle}" th:object="${joinedArticleForm}" method="post">
 			<input type="hidden" name="id" th:value="${article.id}">
 			<input type="submit" value="記事削除">
+			<button type="button" th:id="'like_button' + ${article.id}" th:onclick="'like(' + ${article.id} + ')'"><img width="10" height="10" src="../../static/img/like.png" th:src="@{/img/like.png}"></button>
+			<span th:id="'likeCount' + ${article.id}">0</span>
 		</form>
 		<br>
 		
