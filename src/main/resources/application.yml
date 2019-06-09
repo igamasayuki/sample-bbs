@@ -4,7 +4,3 @@ spring:
     url: jdbc:postgresql://localhost:5432/student
     username: postgres
     password: postgres
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
