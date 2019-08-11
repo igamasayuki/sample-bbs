@@ -143,8 +143,8 @@ public class SeparatedBbsController {
 	 */
 	@RequestMapping("/deletearticle")
 	public String deletearticle(SeparatedArticleForm form) {
+		commentService.deleteByArticleId(form.getId());
 		articleService.delete(form.getId());
-
 		return "redirect:/separatedbbs";
 	}
 }
