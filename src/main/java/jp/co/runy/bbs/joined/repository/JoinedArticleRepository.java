@@ -39,10 +39,10 @@ public class JoinedArticleRepository {
 		List<JoinedComment> commentList = null;
 		long beforeArticleId = 0;
 		while (rs.next()) {
-			int nowId = rs.getInt("id");
-			if (nowId != beforeArticleId) {
+			int nowArticleId = rs.getInt("id");
+			if (nowArticleId != beforeArticleId) {
 				JoinedArticle article = new JoinedArticle();
-				article.setId(nowId);
+				article.setId(nowArticleId);
 				article.setName(rs.getString("name"));
 				article.setContent(rs.getString("content"));
 				commentList = new ArrayList<JoinedComment>();
@@ -56,7 +56,7 @@ public class JoinedArticleRepository {
 				comment.setContent(rs.getString("com_content"));
 				commentList.add(comment);
 			}
-			beforeArticleId = nowId;
+			beforeArticleId = nowArticleId;
 		}
 		return articleList;
 	};

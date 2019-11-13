@@ -13,14 +13,17 @@ public class SeparatedArticleForm {
 
 	/** 投稿ID. */
 	private int id;
+	
 	/** 投稿者名. */
 	@NotNull(message = "投稿者名は値を入力してください")
 	@Size(min = 1, max = 127, message = "投稿者名は1桁以上127桁以下で入力してください")
 	private String name;
+	
 	/** 投稿内容. */
 	@NotNull(message = "投稿内容は値を入力してください")
 	@Size(min = 1, message = "値を入力してください")
 	private String content;
+	
 	public int getId() {
 		return id;
 	}
@@ -38,6 +41,10 @@ public class SeparatedArticleForm {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	@Override
+	public String toString() {
+		return "SeparatedArticleForm [id=" + id + ", name=" + name + ", content=" + content + "]";
 	}
 	
 }

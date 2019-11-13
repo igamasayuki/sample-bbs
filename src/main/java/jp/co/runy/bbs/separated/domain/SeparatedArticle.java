@@ -12,10 +12,13 @@ public class SeparatedArticle {
 
 	/** 記事番号 */
 	private Integer id;
+	
 	/** 投稿者名 */
 	private String name;
+	
 	/** 投稿内容 */
 	private String content;
+	
 	/** 記事についたコメントリスト */
 	private List<SeparatedComment> commentList;
 	
@@ -50,6 +53,11 @@ public class SeparatedArticle {
 	}
 	public void setCommentList(List<SeparatedComment> commentList) {
 		this.commentList = commentList;
+	}
+	@Override
+	public String toString() {
+		return "SeparatedArticle [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList
+				+ "]";
 	}
 
 }

@@ -50,5 +50,10 @@ public class JoinedComment {
 	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
+
+	@Override
+	public String toString() {
+		return "JoinedComment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId + "]";
+	}
 	
 }

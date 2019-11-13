@@ -52,5 +52,11 @@ public class JoinedArticle {
 	public void setCommentList(List<JoinedComment> commentList) {
 		this.commentList = commentList;
 	}
+
+	@Override
+	public String toString() {
+		return "JoinedArticle [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList
+				+ "]";
+	}
 	
 }

@@ -62,4 +62,10 @@ public class SeparatedComment {
 		this.articleId = articleId;
 	}
 
+	@Override
+	public String toString() {
+		return "SeparatedComment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId
+				+ "]";
+	}
+
 }

@@ -12,14 +12,17 @@ import javax.validation.constraints.Size;
 public class SeparatedCommentForm {
 	/** 記事ID. */
 	private Long articleId;
+	
 	/** コメント者名. */
 	@NotNull(message = "コメント者名は必須入力です")
 	@Size(min = 1, max = 127, message = "コメント者名は1桁以上127桁以下で入力してください")
 	private String name;
+	
 	/** コメント内容. */
 	@NotNull(message = "コメントは必須入力です")
 	@Size(min = 1, message = "コメントは必須入力です")
 	private String content;
+	
 	public Long getArticleId() {
 		return articleId;
 	}
@@ -37,6 +40,10 @@ public class SeparatedCommentForm {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	@Override
+	public String toString() {
+		return "SeparatedCommentForm [articleId=" + articleId + ", name=" + name + ", content=" + content + "]";
 	}
 	
 }
