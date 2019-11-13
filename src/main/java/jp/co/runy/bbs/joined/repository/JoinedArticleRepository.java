@@ -93,7 +93,8 @@ public class JoinedArticleRepository {
 
 	/**
 	 * 記事をDBから削除する. <br>
-	 * コメントも同時に削除する.
+	 * コメントも同時に削除する。<br>
+	 * 参考URL http://aoyagikouhei.blog8.fc2.com/blog-entry-183.html
 	 * 
 	 * @param id
 	 *            削除したい記事ID
