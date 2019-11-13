@@ -10,7 +10,7 @@ import java.util.List;
 public class JoinedArticle {
 
 	/** id */
-	public Long id;
+	public Integer id;
 
 	/** 名前 */
 	public String name;
@@ -21,11 +21,11 @@ public class JoinedArticle {
 	/** コメント一覧 */
 	public List<JoinedComment> commentList;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

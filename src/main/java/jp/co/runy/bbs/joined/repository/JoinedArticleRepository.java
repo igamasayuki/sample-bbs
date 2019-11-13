@@ -36,13 +36,13 @@ public class JoinedArticleRepository {
 	 */
 	private static final ResultSetExtractor<List<JoinedArticle>> ARTICLE_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<JoinedArticle> articleList = new LinkedList<JoinedArticle>();
-		JoinedArticle article = null;
 		List<JoinedComment> commentList = null;
 		long beforeArticleId = 0;
 		while (rs.next()) {
-			if (rs.getInt("id") != beforeArticleId) {
-				article = new JoinedArticle();
-				article.setId(rs.getLong("id"));
+			int nowId = rs.getInt("id");
+			if (nowId != beforeArticleId) {
+				JoinedArticle article = new JoinedArticle();
+				article.setId(nowId);
 				article.setName(rs.getString("name"));
 				article.setContent(rs.getString("content"));
 				commentList = new ArrayList<JoinedComment>();
@@ -56,7 +56,7 @@ public class JoinedArticleRepository {
 				comment.setContent(rs.getString("com_content"));
 				commentList.add(comment);
 			}
-			beforeArticleId = article.getId();
+			beforeArticleId = nowId;
 		}
 		return articleList;
 	};
