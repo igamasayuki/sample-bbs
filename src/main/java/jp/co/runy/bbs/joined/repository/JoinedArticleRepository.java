@@ -84,9 +84,6 @@ public class JoinedArticleRepository {
 	public JoinedArticle insert(JoinedArticle article) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(article);
 		String sql = "INSERT INTO articles(name, content) VALUES(:name, :content)";
-		if (article.getId() != null) {
-			throw new NullPointerException();
-		}
 		namedParameterJdbcTemplate.update(sql, param);
 		return article;
 	}
