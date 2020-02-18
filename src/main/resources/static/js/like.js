@@ -1,10 +1,10 @@
 $(function() {
-	$('button').on("click", function() {
+	$("button").on("click", function() {
 		var articleId = $(this).val();
 		// ajaxでコントローラにリクエストを送信
 		$.ajax({
 			type : "GET", // GET or POST
-			url : "/like", // 送信先のコントローラURL
+			url : "/joinedbbs/like", // 送信先のコントローラURL
 			data : {
 				articleId : articleId
 			}, // リクエストパラメータをJSON形式で送る
