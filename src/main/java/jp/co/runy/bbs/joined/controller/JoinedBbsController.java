@@ -152,14 +152,14 @@ public class JoinedBbsController {
 	}
 	
 	/**
-	 * いいね！された記事のいいね件数を1増やして、JSON形式で返す.
-	 * 
+	 * いいね！された記事のいいね件数を1増やして、JSON形式で返す.<br>
+	 * 複数ブラウザからアクセスされても正しく動くようにsynchronizedをつけて排他制御をしています。
 	 * @param articleId 記事ID
 	 * @return １つ増えたいいね件数をJSON形式で(Mapで返すとJSON形式で返る)
 	 */
 	@ResponseBody
 	@RequestMapping("/like")
-	public Map<String, Integer> like(String articleId) {
+	synchronized public Map<String, Integer> like(String articleId) {
 
 		// applicationスコープから記事IDについているいいね件数を取得
 		Integer likeCount = (Integer) application.getAttribute(articleId);
