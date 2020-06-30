@@ -23,7 +23,9 @@
 		<form th:action="@{/joinedbbs/deletearticle}" th:object="${joinedArticleForm}" method="post">
 			<input type="hidden" name="id" th:value="${article.id}">
 			<input type="submit" value="記事削除">
-			<button type="button" th:value="${article.id}"><img width="10" height="10" src="../../static/img/like.png" th:src="@{/img/like.png}"></button>
+			<button type="button" th:value="${article.id}">
+				<img width="10" height="10" src="../../static/img/like.png" th:src="@{/img/like.png}">
+			</button>
 			<span th:id="'likeCount' + ${article.id}">0</span>
 		</form>
 		<br>
