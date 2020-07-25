@@ -1,6 +1,7 @@
+'use strict';
 $(function() {
 	$("button").on("click", function() {
-		var articleId = $(this).val();
+		let articleId = $(this).val();
 		// ajaxでコントローラにリクエストを送信
 		$.ajax({
 			type : "GET", // GET or POST
