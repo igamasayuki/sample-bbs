@@ -40,7 +40,7 @@ public class SeparatedArticleRepository {
 	/**
 	 * 記事を全件表示するメソッド.
 	 * 
-	 * @return 掲示板画面
+	 * @return 記事全件
 	 */
 	public List<SeparatedArticle> findAll() {
 		String sql = "SELECT id,name,content FROM articles ORDER BY id DESC";
