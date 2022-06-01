@@ -9,16 +9,16 @@ package jp.co.runy.bbs.separated.domain;
 public class SeparatedComment {
 
 	/** id */
-	public Long id;
+	private Long id;
 
 	/** 名前 */
-	public String name;
+	private String name;
 
 	/** コメント */
-	public String content;
+	private String content;
 
 	/** 関連づく記事ID */
-	public Long articleId;
+	private Long articleId;
 
 	public SeparatedComment(){}
 	

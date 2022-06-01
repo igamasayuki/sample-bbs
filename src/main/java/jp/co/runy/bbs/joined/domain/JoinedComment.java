@@ -8,16 +8,16 @@ package jp.co.runy.bbs.joined.domain;
 public class JoinedComment {
 
 	/** id */
-	public Long id;
+	private Long id;
 
 	/** 名前 */
-	public String name;
+	private String name;
 
 	/** コメント */
-	public String content;
+	private String content;
 
-	/** 関連づく記事ID */
-	public Long articleId;
+	/** 記事ID */
+	private Long articleId;
 
 	public Long getId() {
 		return id;

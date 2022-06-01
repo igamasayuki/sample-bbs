@@ -10,16 +10,16 @@ import java.util.List;
 public class JoinedArticle {
 
 	/** id */
-	public Integer id;
+	private Integer id;
 
 	/** 名前 */
-	public String name;
+	private String name;
 
 	/** 内容 */
-	public String content;
+	private String content;
 
 	/** コメント一覧 */
-	public List<JoinedComment> commentList;
+	private List<JoinedComment> commentList;
 
 	public Integer getId() {
 		return id;
