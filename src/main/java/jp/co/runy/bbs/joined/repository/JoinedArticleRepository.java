@@ -102,16 +102,20 @@ public class JoinedArticleRepository {
 	/**
 	 * 記事をDBから削除する. <br>
 	 * コメントも同時に削除する。<br>
-	 * 参考URL http://aoyagikouhei.blog8.fc2.com/blog-entry-183.html
 	 * 
 	 * @param id
 	 *            削除したい記事ID
 	 */
 	public void delete(int articleId) {
 		SqlParameterSource sqlparam = new MapSqlParameterSource().addValue("id", articleId);
-		String sql = "WITH deleted AS (DELETE FROM articles WHERE id = :id RETURNING id)"
-				+ "DELETE FROM comments WHERE article_id IN (SELECT id FROM deleted)";
-
+		// CREATE TABLEの際に「article_id integer REFERENCES articles (id) ON DELETE CASCADE」とした場合
+		String sql = "DELETE FROM articles WHERE id = :id";
+		
+		// CREATE TABLEの際に「ON DELETE CASCADE」をしなかった場合
+		// 参考URL http://aoyagikouhei.blog8.fc2.com/blog-entry-183.html
+//		String sql = "WITH deleted AS (DELETE FROM articles WHERE id = :id RETURNING id)"
+//				+ "DELETE FROM comments WHERE article_id IN (SELECT id FROM deleted)";
+		
 		namedParameterJdbcTemplate.update(sql, sqlparam);
 	}
 	
