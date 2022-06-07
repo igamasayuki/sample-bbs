@@ -2,6 +2,7 @@
 $(function() {
 	$("button").on("click", function() {
 		let articleId = $(this).val();
+		console.log(articleId);
 		// ajaxでコントローラにリクエストを送信
 		$.ajax({
 			type : "GET", // GET or POST
@@ -13,6 +14,7 @@ $(function() {
 			async : true, // true:非同期(デフォルト), false:同期
 		}).done(function(data) {
 			// 通信が成功した場合に受け取るメッセージ
+			console.dir(JSON.stringify(data));
 			let likeCount = data["likeCount"];
 			$("#likeCount" + articleId).text(likeCount)
 		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
