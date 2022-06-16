@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.runy.bbs.separated.domain.SeparatedArticle;
@@ -64,7 +66,7 @@ public class SeparatedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping
+	@GetMapping("")
 	public String index(Model model) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
@@ -101,7 +103,7 @@ public class SeparatedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping("/postarticle")
+	@PostMapping("/postarticle")
 	public String insertArticle(@Validated SeparatedArticleForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return index(model);
@@ -121,7 +123,7 @@ public class SeparatedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping("/postcomment")
+	@PostMapping("/postcomment")
 	public String insertComment(@Validated SeparatedCommentForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return index(model);
@@ -141,7 +143,7 @@ public class SeparatedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping("/deletearticle")
+	@PostMapping("/deletearticle")
 	public String deletearticle(SeparatedArticleForm form) {
 		commentService.deleteByArticleId(form.getId());
 		articleService.delete(form.getId());

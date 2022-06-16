@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -71,8 +73,8 @@ public class JoinedBbsController {
 	 * @param model モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping
-	public String form(Model model) {
+	@GetMapping("")
+	public String index(Model model) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
 		
@@ -105,10 +107,10 @@ public class JoinedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping(value = "/postarticle")
+	@PostMapping("/postarticle")
 	public String postarticle(@Validated JoinedArticleForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return form(model);
+			return index(model);
 		}
 		JoinedArticle article = new JoinedArticle();
 		BeanUtils.copyProperties(form, article);
@@ -127,10 +129,10 @@ public class JoinedBbsController {
 	 *            モデル
 	 * @return 掲示板画面
 	 */
-	@RequestMapping(value = "/postcomment")
+	@PostMapping("/postcomment")
 	public String postcomment(@Validated JoinedCommentForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return form(model);
+			return index(model);
 		}
 		JoinedComment comment = new JoinedComment();
 		BeanUtils.copyProperties(form, comment);
@@ -145,7 +147,7 @@ public class JoinedBbsController {
 	 *            記事フォーム
 	 * @return 記事登録画面
 	 */
-	@RequestMapping(value = "/deletearticle")
+	@PostMapping(value = "/deletearticle")
 	public String deletearticle(JoinedArticleForm form) {
 		articleService.delete(form.getId());
 		return "redirect:/joinedbbs";
@@ -158,7 +160,7 @@ public class JoinedBbsController {
 	 * @return １つ増えたいいね件数をJSON形式で(Mapで返すとJSON形式で返る)
 	 */
 	@ResponseBody
-	@RequestMapping("/like")
+	@GetMapping("/like")
 	synchronized public Map<String, Integer> like(String articleId) {
 
 		// applicationスコープから記事IDについているいいね件数を取得
