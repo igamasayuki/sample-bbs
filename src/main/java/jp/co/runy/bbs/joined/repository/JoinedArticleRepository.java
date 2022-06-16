@@ -59,9 +59,10 @@ public class JoinedArticleRepository {
 			// 記事だけあってコメントがない場合はCommentオブジェクトは作らない
 			if (rs.getInt("com_id") != 0) {
 				JoinedComment comment = new JoinedComment();
-				comment.setId(rs.getLong("com_id"));
+				comment.setId(rs.getInt("com_id"));
 				comment.setName(rs.getString("com_name"));
 				comment.setContent(rs.getString("com_content"));
+				comment.setArticleId(rs.getInt("com_article_id"));
 				// コメントをarticleオブジェクト内にセットされているcommentListに直接addしている(参照型なのでこのようなことができる)
 				commentList.add(comment);
 			}
@@ -78,7 +79,7 @@ public class JoinedArticleRepository {
 	 * @return コメントを含んだ記事一覧情報
 	 */
 	public List<JoinedArticle> findAll() {
-		String sql = "SELECT a.id, a.name, a.content, com.id com_id, com.name com_name, com.content com_content,com.article_id "
+		String sql = "SELECT a.id, a.name, a.content, com.id com_id, com.name com_name, com.content com_content,com.article_id com_article_id "
 				+ "FROM articles a LEFT JOIN comments com ON a.id = com.article_id ORDER BY a.id DESC, com.id;";
 		List<JoinedArticle> articleList = namedParameterJdbcTemplate.query(sql, ARTICLE_RESULT_SET_EXTRACTOR);
 

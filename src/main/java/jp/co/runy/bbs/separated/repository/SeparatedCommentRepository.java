@@ -25,11 +25,12 @@ public class SeparatedCommentRepository {
 	 * ＤＢから参照したコメントの情報をドメインにセットするRowMapper.
 	 */
 	private static final RowMapper<SeparatedComment> COMMENT_RESULT_SET_EXTRACTOR = (rs, i) -> {
-		Long id = rs.getLong("id");
-		String name = rs.getString("name");
-		String content = rs.getString("content");
-		Long articleId = rs.getLong("article_id");
-		return new SeparatedComment(id, name, content, articleId);
+		SeparatedComment separatedComment = new SeparatedComment();
+		separatedComment.setId(rs.getInt("id"));
+		separatedComment.setName(rs.getString("name"));
+		separatedComment.setContent(rs.getString("content"));
+		separatedComment.setArticleId(rs.getInt("article_id"));
+		return separatedComment;
 	};
 
 	@Autowired
@@ -38,8 +39,7 @@ public class SeparatedCommentRepository {
 	/**
 	 * 指定した記事のコメントを取り出すメソッド.
 	 * 
-	 * @param articleId
-	 *            取り出したいコメントの記事番号
+	 * @param articleId 取り出したいコメントの記事番号
 	 * @return 指定した記事番号のコメントリスト
 	 */
 	public List<SeparatedComment> findByArticleId(int articleId) {
@@ -52,8 +52,7 @@ public class SeparatedCommentRepository {
 	/**
 	 * コメントを追加するメソッド.
 	 * 
-	 * @param comment
-	 *            追加するコメントオブジェクト
+	 * @param comment 追加するコメントオブジェクト
 	 */
 	public void insert(SeparatedComment comment) {
 		String insertSql = "INSERT INTO comments (name,content,article_id) VALUES(:name,:content,:articleId)";
@@ -64,8 +63,7 @@ public class SeparatedCommentRepository {
 	/**
 	 * コメントを削除するメソッド.
 	 * 
-	 * @param id
-	 *            削除したい記事のＩＤ
+	 * @param id 削除したい記事のＩＤ
 	 */
 	public void deleteByArticleId(int id) {
 		String deleteSql = "DELETE FROM comments WHERE article_id=:articleId";

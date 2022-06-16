@@ -9,7 +9,7 @@ package jp.co.runy.bbs.separated.domain;
 public class SeparatedComment {
 
 	/** id */
-	private Long id;
+	private Integer id;
 
 	/** 名前 */
 	private String name;
@@ -18,23 +18,13 @@ public class SeparatedComment {
 	private String content;
 
 	/** 関連づく記事ID */
-	private Long articleId;
+	private Integer articleId;
 
-	public SeparatedComment(){}
-	
-	public SeparatedComment(Long id, String name, String content, Long articleId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.content = content;
-		this.articleId = articleId;
-	}
-
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -54,18 +44,12 @@ public class SeparatedComment {
 		this.content = content;
 	}
 
-	public Long getArticleId() {
+	public Integer getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(Long articleId) {
+	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
-	}
-
-	@Override
-	public String toString() {
-		return "SeparatedComment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId
-				+ "]";
 	}
 
 }

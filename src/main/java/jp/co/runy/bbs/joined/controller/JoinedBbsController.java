@@ -43,7 +43,7 @@ public class JoinedBbsController {
 
 	@Autowired
 	private JoinedCommentService commentService;
-	
+
 	@Autowired
 	private ServletContext application; // ←いいね件数を保存するため
 
@@ -77,13 +77,13 @@ public class JoinedBbsController {
 	public String index(Model model) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
-		
+
 		List<JoinedArticle> articleList = articleService.findAll();
-		
+
 		// 記事サイズをスコープに格納する
 		model.addAttribute("listSize", articleList.size());
 		// 件数が多いと表示は時間がかかるので最初の10個のみスコープへ格納する
-		if(articleList.size() >= 10) {
+		if (articleList.size() >= 10) {
 			articleList = articleList.subList(0, 10);
 		}
 		// 記事リストをスコープに格納する
@@ -92,19 +92,16 @@ public class JoinedBbsController {
 		// 計測開始からここまでの時間の差分を取得しスコープへ格納
 		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
 		model.addAttribute("lapTime", lapTime);
-		
+
 		return "joined/joinedbbsview";
 	}
 
 	/**
 	 * 記事を投稿します.
 	 * 
-	 * @param form
-	 *            フォーム
-	 * @param result
-	 *            リザルト
-	 * @param model
-	 *            モデル
+	 * @param form   フォーム
+	 * @param result リザルト
+	 * @param model  モデル
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postarticle")
@@ -121,12 +118,9 @@ public class JoinedBbsController {
 	/**
 	 * コメントを投稿します.
 	 * 
-	 * @param form
-	 *            フォーム
-	 * @param result
-	 *            リザルト
-	 * @param model
-	 *            モデル
+	 * @param form   フォーム
+	 * @param result リザルト
+	 * @param model  モデル
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postcomment")
@@ -136,6 +130,7 @@ public class JoinedBbsController {
 		}
 		JoinedComment comment = new JoinedComment();
 		BeanUtils.copyProperties(form, comment);
+		comment.setArticleId(form.getArticleId());
 		commentService.save(comment);
 		return "redirect:/joinedbbs";
 	}
@@ -143,8 +138,7 @@ public class JoinedBbsController {
 	/**
 	 * 記事を削除します.
 	 * 
-	 * @param form
-	 *            記事フォーム
+	 * @param form 記事フォーム
 	 * @return 記事登録画面
 	 */
 	@PostMapping(value = "/deletearticle")
@@ -152,10 +146,11 @@ public class JoinedBbsController {
 		articleService.delete(form.getId());
 		return "redirect:/joinedbbs";
 	}
-	
+
 	/**
 	 * いいね！された記事のいいね件数を1増やして、JSON形式で返す.<br>
 	 * 複数ブラウザからアクセスされても正しく動くようにsynchronizedをつけて排他制御をしています。
+	 * 
 	 * @param articleId 記事ID
 	 * @return １つ増えたいいね件数をJSON形式で(Mapで返すとJSON形式で返る)
 	 */
@@ -172,11 +167,11 @@ public class JoinedBbsController {
 		// いいね件数を１増やす
 		++likeCount;
 		application.setAttribute(articleId, likeCount);
-		
+
 		// 増やした件数をMapとして返す→JSON形式で返る
 		Map<String, Integer> likeMap = new HashMap<>();
 		likeMap.put("likeCount", likeCount);
 		return likeMap;
 	}
-	
+
 }
