@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  */
 public class SeparatedCommentForm {
 	/** 記事ID. */
-	private Long articleId;
+	private Integer articleId;
 
 	/** コメント者名. */
 	@NotNull(message = "コメント者名は必須入力です")
@@ -23,11 +23,11 @@ public class SeparatedCommentForm {
 	@Size(min = 1, message = "コメントは必須入力です")
 	private String content;
 
-	public Long getArticleId() {
+	public Integer getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(Long articleId) {
+	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
 	}
 

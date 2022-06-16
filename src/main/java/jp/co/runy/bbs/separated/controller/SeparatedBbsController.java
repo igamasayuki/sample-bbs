@@ -62,11 +62,14 @@ public class SeparatedBbsController {
 	/**
 	 * 記事とコメントを表示するメソッド.
 	 * 
-	 * @param model モデル
+	 * @param model                モデル
+	 * @param separatedArticleForm 記事フォーム リクエストスコープ格納用
+	 * @param separatedCommentForm コメントフォーム リクエストスコープ格納用
 	 * @return 掲示板画面
 	 */
 	@GetMapping("")
-	public String index(Model model) {
+	public String index(Model model, SeparatedArticleForm separatedArticleForm,
+			SeparatedCommentForm separatedCommentForm) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
 		List<SeparatedArticle> articleList = articleService.findAll();
@@ -96,17 +99,20 @@ public class SeparatedBbsController {
 	/**
 	 * 記事を追加するメソッド.
 	 * 
-	 * @param form  記事フォーム
-	 * @param model モデル
+	 * @param separatedArticleForm 記事フォーム
+	 * @param result               リザルト
+	 * @param model                モデル
+	 * @param separatedCommentForm コメントフォーム リクエストスコープ格納用
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postarticle")
-	public String insertArticle(@Validated SeparatedArticleForm form, BindingResult result, Model model) {
+	public String insertArticle(@Validated SeparatedArticleForm separatedArticleForm, BindingResult result, Model model,
+			SeparatedCommentForm separatedCommentForm) {
 		if (result.hasErrors()) {
-			return index(model);
+			return index(model, separatedArticleForm, separatedCommentForm);
 		}
 		SeparatedArticle article = new SeparatedArticle();
-		BeanUtils.copyProperties(form, article);
+		BeanUtils.copyProperties(separatedArticleForm, article);
 		articleService.save(article);
 		return "redirect:/separatedbbs";
 	}
@@ -114,17 +120,20 @@ public class SeparatedBbsController {
 	/**
 	 * コメントを追加するメソッド.
 	 * 
-	 * @param form  コメントフォーム
-	 * @param model モデル
+	 * @param separatedCommentForm コメントフォーム
+	 * @param result               リザルト
+	 * @param model                モデル
+	 * @param separatedArticleForm 記事フォーム
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postcomment")
-	public String insertComment(@Validated SeparatedCommentForm form, BindingResult result, Model model) {
+	public String insertComment(@Validated SeparatedCommentForm separatedCommentForm, BindingResult result, Model model,
+			SeparatedArticleForm separatedArticleForm) {
 		if (result.hasErrors()) {
-			return index(model);
+			return index(model, separatedArticleForm, separatedCommentForm);
 		}
 		SeparatedComment comment = new SeparatedComment();
-		BeanUtils.copyProperties(form, comment);
+		BeanUtils.copyProperties(separatedCommentForm, comment);
 		commentService.save(comment);
 		return "redirect:/separatedbbs";
 	}

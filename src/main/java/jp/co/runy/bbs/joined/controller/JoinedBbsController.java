@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,34 +46,36 @@ public class JoinedBbsController {
 	@Autowired
 	private ServletContext application; // ←いいね件数を保存するため
 
-	/**
-	 * 記事のフォームを初期化します.
-	 * 
-	 * @return 記事フォーム
-	 */
-	@ModelAttribute
-	public JoinedArticleForm setUpArticleForm() {
-		return new JoinedArticleForm();
-	}
+//	/**
+//	 * 記事のフォームを初期化します.
+//	 * 
+//	 * @return 記事フォーム
+//	 */
+//	@ModelAttribute
+//	public JoinedArticleForm setUpArticleForm() {
+//		return new JoinedArticleForm();
+//	}
 
-	/**
-	 * コメントのフォームを初期化します.
-	 * 
-	 * @return コメントフォーム
-	 */
-	@ModelAttribute
-	public JoinedCommentForm setUpCommentForm() {
-		return new JoinedCommentForm();
-	}
+//	/**
+//	 * コメントのフォームを初期化します.
+//	 * 
+//	 * @return コメントフォーム
+//	 */
+//	@ModelAttribute
+//	public JoinedCommentForm setUpCommentForm() {
+//		return new JoinedCommentForm();
+//	}
 
 	/**
 	 * 掲示板を表示します.
 	 * 
-	 * @param model モデル
+	 * @param model             モデル
+	 * @param joinedArticleForm 記事フォーム リクエストスコープ格納用
+	 * @param joinedCommentForm コメントフォーム リクエストスコープ格納用
 	 * @return 掲示板画面
 	 */
 	@GetMapping("")
-	public String index(Model model) {
+	public String index(Model model, JoinedArticleForm joinedArticleForm, JoinedCommentForm joinedCommentForm) {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
 
@@ -99,18 +100,20 @@ public class JoinedBbsController {
 	/**
 	 * 記事を投稿します.
 	 * 
-	 * @param form   フォーム
-	 * @param result リザルト
-	 * @param model  モデル
+	 * @param joinedArticleform フォーム
+	 * @param result            リザルト
+	 * @param model             モデル
+	 * @param joinedCommentForm コメントフォーム
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postarticle")
-	public String postarticle(@Validated JoinedArticleForm form, BindingResult result, Model model) {
+	public String postarticle(@Validated JoinedArticleForm joinedArticleform, BindingResult result, Model model,
+			JoinedCommentForm joinedCommentForm) {
 		if (result.hasErrors()) {
-			return index(model);
+			return index(model, joinedArticleform, joinedCommentForm);
 		}
 		JoinedArticle article = new JoinedArticle();
-		BeanUtils.copyProperties(form, article);
+		BeanUtils.copyProperties(joinedArticleform, article);
 		articleService.save(article);
 		return "redirect:/joinedbbs";
 	}
@@ -118,19 +121,21 @@ public class JoinedBbsController {
 	/**
 	 * コメントを投稿します.
 	 * 
-	 * @param form   フォーム
-	 * @param result リザルト
-	 * @param model  モデル
+	 * @param joinedCommentForm フォーム
+	 * @param result            リザルト
+	 * @param model             モデル
+	 * @param joinedArticleForm 記事フォーム
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postcomment")
-	public String postcomment(@Validated JoinedCommentForm form, BindingResult result, Model model) {
+	public String postcomment(@Validated JoinedCommentForm joinedCommentForm, BindingResult result, Model model,
+			JoinedArticleForm joinedArticleform) {
 		if (result.hasErrors()) {
-			return index(model);
+			return index(model, joinedArticleform, joinedCommentForm);
 		}
 		JoinedComment comment = new JoinedComment();
-		BeanUtils.copyProperties(form, comment);
-		comment.setArticleId(form.getArticleId());
+		BeanUtils.copyProperties(joinedCommentForm, comment);
+		comment.setArticleId(joinedCommentForm.getArticleId());
 		commentService.save(comment);
 		return "redirect:/joinedbbs";
 	}
