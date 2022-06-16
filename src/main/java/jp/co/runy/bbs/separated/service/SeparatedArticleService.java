@@ -32,8 +32,7 @@ public class SeparatedArticleService {
 	/**
 	 * 記事を登録します.
 	 * 
-	 * @param article
-	 *            記事情報
+	 * @param article 記事情報
 	 * @return 登録した記事情報
 	 */
 	public void save(SeparatedArticle article) {
@@ -43,16 +42,16 @@ public class SeparatedArticleService {
 	/**
 	 * 記事を削除します.
 	 * 
-	 * @param id　削除したい記事ID
+	 * @param id 削除したい記事ID
 	 */
 	public void delete(int id) {
 		articleRepository.deleteById(id);
 	}
-	
+
 	/**
 	 * 記事投稿者名で前方一致検索します.
 	 * 
-	 * @param name　記事投稿者名
+	 * @param name 記事投稿者名
 	 * @return 記事とコメントのリスト
 	 */
 	public List<SeparatedArticle> findByUserName(String name) {

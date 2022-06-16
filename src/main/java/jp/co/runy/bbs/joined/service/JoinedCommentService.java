@@ -21,8 +21,7 @@ public class JoinedCommentService {
 	/**
 	 * コメントを登録します.
 	 * 
-	 * @param comment
-	 *            コメント情報
+	 * @param comment コメント情報
 	 * @return 登録したコメント情報
 	 */
 	public void save(JoinedComment comment) {

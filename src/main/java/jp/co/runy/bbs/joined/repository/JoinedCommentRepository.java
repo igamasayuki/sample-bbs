@@ -22,8 +22,7 @@ public class JoinedCommentRepository {
 	/**
 	 * コメントを新規作成します.
 	 * 
-	 * @param comment
-	 *            コメント
+	 * @param comment コメント
 	 * @return 作成されたコメント情報
 	 */
 	public JoinedComment insert(JoinedComment comment) {

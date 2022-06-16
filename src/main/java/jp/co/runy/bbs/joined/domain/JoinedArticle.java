@@ -58,5 +58,5 @@ public class JoinedArticle {
 		return "JoinedArticle [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList
 				+ "]";
 	}
-	
+
 }

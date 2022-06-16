@@ -35,14 +35,14 @@ public class JoinedArticleRepository {
 		// 記事一覧が入るarticleListを生成
 		List<JoinedArticle> articleList = new LinkedList<JoinedArticle>();
 		List<JoinedComment> commentList = null;
-		
+
 		// 前の行の記事IDを退避しておく変数
 		long beforeArticleId = 0;
-		
+
 		while (rs.next()) {
 			// 現在検索されている記事IDを退避
 			int nowArticleId = rs.getInt("id");
-			
+
 			// 現在の記事IDと前の記事IDが違う場合はArticleオブジェクトを生成
 			if (nowArticleId != beforeArticleId) {
 				JoinedArticle article = new JoinedArticle();
@@ -55,7 +55,7 @@ public class JoinedArticleRepository {
 				// コメントがセットされていない状態のArticleオブジェクトをarticleListオブジェクトにadd
 				articleList.add(article);
 			}
-			
+
 			// 記事だけあってコメントがない場合はCommentオブジェクトは作らない
 			if (rs.getInt("com_id") != 0) {
 				JoinedComment comment = new JoinedComment();
@@ -66,7 +66,7 @@ public class JoinedArticleRepository {
 				// コメントをarticleオブジェクト内にセットされているcommentListに直接addしている(参照型なのでこのようなことができる)
 				commentList.add(comment);
 			}
-			
+
 			// 現在の記事IDを前の記事IDを入れる退避IDに格納
 			beforeArticleId = nowArticleId;
 		}
@@ -89,8 +89,7 @@ public class JoinedArticleRepository {
 	/**
 	 * 記事をインサートします.
 	 * 
-	 * @param article
-	 *            記事
+	 * @param article 記事
 	 * @return 記事
 	 */
 	public JoinedArticle insert(JoinedArticle article) {
@@ -104,26 +103,26 @@ public class JoinedArticleRepository {
 	 * 記事をDBから削除する. <br>
 	 * コメントも同時に削除する。<br>
 	 * 
-	 * @param id
-	 *            削除したい記事ID
+	 * @param id 削除したい記事ID
 	 */
 	public void delete(int articleId) {
 		SqlParameterSource sqlparam = new MapSqlParameterSource().addValue("id", articleId);
-		// CREATE TABLEの際に「article_id integer REFERENCES articles (id) ON DELETE CASCADE」とした場合
+		// CREATE TABLEの際に「article_id integer REFERENCES articles (id) ON DELETE
+		// CASCADE」とした場合
 		String sql = "DELETE FROM articles WHERE id = :id";
-		
+
 		// CREATE TABLEの際に「ON DELETE CASCADE」をしなかった場合
 		// 参考URL http://aoyagikouhei.blog8.fc2.com/blog-entry-183.html
 //		String sql = "WITH deleted AS (DELETE FROM articles WHERE id = :id RETURNING id)"
 //				+ "DELETE FROM comments WHERE article_id IN (SELECT id FROM deleted)";
-		
+
 		namedParameterJdbcTemplate.update(sql, sqlparam);
 	}
-	
+
 	/**
 	 * 記事投稿者の名前で前方一致検索をする.
 	 * 
-	 * @param name　検索したい名前
+	 * @param name 検索したい名前
 	 * @return 該当の記事とコメントのリスト
 	 */
 	public List<JoinedArticle> findByUserName(String name) {

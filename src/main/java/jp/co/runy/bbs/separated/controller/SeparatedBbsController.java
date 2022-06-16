@@ -33,7 +33,7 @@ import jp.co.runy.bbs.separated.service.SeparatedCommentService;
 @Transactional
 @RequestMapping("/separatedbbs")
 public class SeparatedBbsController {
-	
+
 	@Autowired
 	private SeparatedArticleService articleService;
 	@Autowired
@@ -62,8 +62,7 @@ public class SeparatedBbsController {
 	/**
 	 * 記事とコメントを表示するメソッド.
 	 * 
-	 * @param model
-	 *            モデル
+	 * @param model モデル
 	 * @return 掲示板画面
 	 */
 	@GetMapping("")
@@ -71,22 +70,22 @@ public class SeparatedBbsController {
 		// 計測スタート
 		LocalDateTime time = LocalDateTime.now();
 		List<SeparatedArticle> articleList = articleService.findAll();
-		
+
 		// 記事サイズをスコープに格納する
 		model.addAttribute("listSize", articleList.size());
-		
+
 		for (SeparatedArticle article : articleList) {
 			List<SeparatedComment> commentList = commentService.findByArticleId(article.getId());
 			article.setCommentList(commentList);
 		}
-		
+
 		// 件数が多いと表示は時間がかかるので最初の10個のみスコープへ格納する
-		if(articleList.size() >= 10) {
+		if (articleList.size() >= 10) {
 			articleList = articleList.subList(0, 10);
 		}
 		// 記事リストをスコープに格納する
 		model.addAttribute("articleList", articleList);
-		
+
 		// 計測開始からここまでの時間の差分を取得しスコープへ格納
 		Long lapTime = ChronoUnit.MILLIS.between(time, LocalDateTime.now());
 		model.addAttribute("lapTime", lapTime);
@@ -97,10 +96,8 @@ public class SeparatedBbsController {
 	/**
 	 * 記事を追加するメソッド.
 	 * 
-	 * @param form
-	 *            記事フォーム
-	 * @param model
-	 *            モデル
+	 * @param form  記事フォーム
+	 * @param model モデル
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postarticle")
@@ -117,10 +114,8 @@ public class SeparatedBbsController {
 	/**
 	 * コメントを追加するメソッド.
 	 * 
-	 * @param form
-	 *            コメントフォーム
-	 * @param model
-	 *            モデル
+	 * @param form  コメントフォーム
+	 * @param model モデル
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/postcomment")
@@ -137,10 +132,8 @@ public class SeparatedBbsController {
 	/**
 	 * 記事とコメントを削除するメソッド.
 	 * 
-	 * @param id
-	 *            削除する記事のＩＤ
-	 * @param model
-	 *            モデル
+	 * @param id    削除する記事のＩＤ
+	 * @param model モデル
 	 * @return 掲示板画面
 	 */
 	@PostMapping("/deletearticle")

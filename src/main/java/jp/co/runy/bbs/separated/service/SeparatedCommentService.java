@@ -19,7 +19,7 @@ public class SeparatedCommentService {
 
 	@Autowired
 	private SeparatedCommentRepository commentRepository;
-	
+
 	/**
 	 * コメント一覧を取得します.
 	 * 
@@ -32,18 +32,17 @@ public class SeparatedCommentService {
 	/**
 	 * コメントを登録します.
 	 * 
-	 * @param comment
-	 *            コメント情報
+	 * @param comment コメント情報
 	 * @return 登録したコメント情報
 	 */
 	public void save(SeparatedComment comment) {
 		commentRepository.insert(comment);
 	}
-	
+
 	/**
 	 * 削除される記事のコメントを削除します.
 	 * 
-	 * @param id　削除したい記事ID
+	 * @param id 削除したい記事ID
 	 */
 	public void deleteByArticleId(int articleId) {
 		commentRepository.deleteByArticleId(articleId);
