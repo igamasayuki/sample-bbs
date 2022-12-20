@@ -3,7 +3,7 @@
 研修の課題の解答例プロジェクトです。  
 
 ## 環境
- * SpringBoot 2.0.3
+ * SpringBoot
  * Thymeleaf
  * Postgresql
 
