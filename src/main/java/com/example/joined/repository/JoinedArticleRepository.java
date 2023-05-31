@@ -80,7 +80,7 @@ public class JoinedArticleRepository {
 	 */
 	public List<JoinedArticle> findAll() {
 		String sql = "SELECT a.id, a.name, a.content, com.id com_id, com.name com_name, com.content com_content,com.article_id com_article_id "
-				+ "FROM articles a LEFT JOIN comments com ON a.id = com.article_id ORDER BY a.id DESC, com.id;";
+				+ "FROM articles a LEFT JOIN comments com ON a.id = com.article_id ORDER BY a.id DESC, com.id DESC;";
 		List<JoinedArticle> articleList = namedParameterJdbcTemplate.query(sql, ARTICLE_RESULT_SET_EXTRACTOR);
 
 		return articleList;
