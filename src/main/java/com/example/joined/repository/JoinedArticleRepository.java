@@ -33,7 +33,7 @@ public class JoinedArticleRepository {
 	 */
 	private static final ResultSetExtractor<List<JoinedArticle>> ARTICLE_RESULT_SET_EXTRACTOR = (rs) -> {
 		// 記事一覧が入るarticleListを生成
-		List<JoinedArticle> articleList = new LinkedList<JoinedArticle>();
+		List<JoinedArticle> articleList = new ArrayList<>();
 		List<JoinedComment> commentList = null;
 
 		// 前の行の記事IDを退避しておく変数
@@ -57,7 +57,7 @@ public class JoinedArticleRepository {
 			}
 
 			// 記事だけあってコメントがない場合はCommentオブジェクトは作らない
-			if (rs.getInt("com_id") != 0) {
+			if (rs.getObject("com_id") != null) {
 				JoinedComment comment = new JoinedComment();
 				comment.setId(rs.getInt("com_id"));
 				comment.setName(rs.getString("com_name"));
@@ -80,7 +80,7 @@ public class JoinedArticleRepository {
 	 */
 	public List<JoinedArticle> findAll() {
 		String sql = "SELECT a.id, a.name, a.content, com.id com_id, com.name com_name, com.content com_content,com.article_id com_article_id "
-				+ "FROM articles a LEFT JOIN comments com ON a.id = com.article_id ORDER BY a.id DESC, com.id DESC;";
+				+ "FROM articles a LEFT OUTER JOIN comments com ON a.id = com.article_id ORDER BY a.id DESC, com.id DESC;";
 		List<JoinedArticle> articleList = namedParameterJdbcTemplate.query(sql, ARTICLE_RESULT_SET_EXTRACTOR);
 
 		return articleList;
