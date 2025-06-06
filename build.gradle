@@ -13,13 +13,6 @@ repositories {
 	mavenCentral()
 }
 
-
-// 以下の3行を追加する(warの名前になります)
-war {
-	archiveName 'samplebbs.war'
-	archiveName 'samplebbs.war'
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
